@@ -36,4 +36,21 @@ public class BookController {
         return null;
     }
 
+    @DeleteMapping("/delete-book/{id}")
+    public Boolean deleteBookById(@PathVariable String id){
+        return books.removeIf(book -> book.getId().equals(id));
+    }
+
+    @PutMapping("/update-book/{id}")
+    public Boolean updateBook(@PathVariable String id, @RequestBody BookDto newBook){
+        for(BookDto dto :books){
+            if(dto.getId().equals(id)){
+                dto.setAuthor(newBook.getAuthor());
+                dto.setTitle(newBook.getTitle());
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
